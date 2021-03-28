@@ -1,0 +1,13 @@
+tools:
+
+cmds:
+  show-word:
+    win-service:
+      condition:
+        os: win
+        type: service
+      operations:
+        download:
+          inner-cmds:
+            - ""
+      
