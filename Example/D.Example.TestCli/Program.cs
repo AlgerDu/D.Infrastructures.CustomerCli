@@ -1,4 +1,5 @@
-﻿using System;
+﻿using D.Infrastructures.CustomerCli;
+using System;
 
 namespace D.Example.TestCli
 {
@@ -6,7 +7,10 @@ namespace D.Example.TestCli
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var app = new DefaultCliAppBuilder(args)
+                .Build();
+
+            app.Execute();
         }
     }
 }
