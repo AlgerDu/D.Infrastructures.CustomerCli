@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>D.Infrastructures.CustomerCli</AssemblyName>
+    <RootNamespace>D.Infrastructures.CustomerCli</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>.\bin\D.Infrastructures.CustomerCli.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>
