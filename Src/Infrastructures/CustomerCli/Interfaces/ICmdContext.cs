@@ -10,8 +10,5 @@ namespace D.Infrastructures.CustomerCli
     /// </summary>
     public interface ICmdContext : IConfiguration
     {
-        void AddConfig(IConfiguration add);
-
-        IServiceProvider Services { get; }
     }
 }
