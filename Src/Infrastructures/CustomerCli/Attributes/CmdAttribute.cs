@@ -16,9 +16,9 @@ namespace D.Infrastructures.CustomerCli
         public string Code { get; set; }
 
         /// <summary>
-        /// 命令的帮助描述
+        /// 可选参数的类型
         /// </summary>
-        public string Descriptions { get; set; }
+        public Type OptionType { get; set; }
 
         /// <summary>
         /// 

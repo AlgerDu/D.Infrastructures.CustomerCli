@@ -13,15 +13,15 @@ namespace D.Infrastructures.CustomerCli
         /// <summary>
         /// key
         /// </summary>
-        public string Key { get; set; }
+        public string[] Keys { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="key"></param>
-        public SwitchMapKeyAttribute(string key)
+        /// <param name="keys"></param>
+        public SwitchMapKeyAttribute(params string[] keys)
         {
-            Key = key;
+            Keys = keys;
         }
     }
 }
