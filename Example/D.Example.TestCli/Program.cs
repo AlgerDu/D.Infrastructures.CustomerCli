@@ -9,7 +9,7 @@ namespace D.Example.TestCli
         {
             var app = new DefaultCliAppBuilder(args)
                 .UseCustomerCliCore()
-                .Build();
+                .BuildDefaultApp();
 
             app.Execute();
         }

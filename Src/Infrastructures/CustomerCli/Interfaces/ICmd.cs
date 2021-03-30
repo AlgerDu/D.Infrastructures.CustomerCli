@@ -12,7 +12,6 @@ namespace D.Infrastructures.CustomerCli
         /// <summary>
         /// 执行命令
         /// </summary>
-        /// <param name="context"></param>
-        void Execute(ICmdContext context);
+        void Execute();
     }
 }

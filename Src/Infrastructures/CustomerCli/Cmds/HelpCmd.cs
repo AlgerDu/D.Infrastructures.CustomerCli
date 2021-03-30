@@ -21,17 +21,19 @@ namespace D.Infrastructures.CustomerCli
         /// <param name="logger"></param>
         /// <param name="output"></param>
         /// <param name="cmds"></param>
+        /// <param name="context"></param>
         public HelpCmd(
             ILogger<HelpCmd> logger
             , IConsoleOutput output
             , ICmdProvider cmds
-            ) : base(logger, output)
+            , ICmdContext context
+            ) : base(logger, output, context)
         {
             _cmds = cmds;
         }
 
         ///<inheritdoc/>
-        public override void Execute(ICmdContext context)
+        public override void Execute()
         {
 
         }

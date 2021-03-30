@@ -21,20 +21,28 @@ namespace D.Infrastructures.CustomerCli
         readonly protected IConsoleOutput _output;
 
         /// <summary>
+        /// 命令上下文
+        /// </summary>
+        readonly protected ICmdContext _context;
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="output"></param>
+        /// <param name="context"></param>
         public BaseCmd(
             ILogger logger
             , IConsoleOutput output
+            , ICmdContext context
             )
         {
             _logger = logger;
             _output = output;
+            _context = context;
         }
 
         ///<inheritdoc/>
-        public abstract void Execute(ICmdContext context);
+        public abstract void Execute();
     }
 }

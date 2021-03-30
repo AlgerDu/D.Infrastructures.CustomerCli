@@ -18,5 +18,10 @@ namespace D.Infrastructures.CustomerCli
         {
             return builder;
         }
+
+        public static ICliApp BuildDefaultApp(this ICliAppBuilder builder)
+        {
+            return builder.Build<DefaultCliApp>();
+        }
     }
 }

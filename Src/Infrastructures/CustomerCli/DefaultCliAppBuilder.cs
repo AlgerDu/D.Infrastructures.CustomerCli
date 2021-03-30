@@ -10,25 +10,48 @@ namespace D.Infrastructures.CustomerCli
     /// </summary>
     public class DefaultCliAppBuilder : ICliAppBuilder
     {
+        private readonly string[] _args;
+
+        private Action<IServiceCollection> _configureServices;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="args"></param>
         public DefaultCliAppBuilder(string[] args)
         {
-
+            _args = args;
         }
 
         /// <inheritdoc/>
         public ICliAppBuilder ConfigureServices(Action<IServiceCollection> configureDelegate)
         {
-            throw new NotImplementedException();
+            _configureServices += configureDelegate;
+
+            return this;
         }
 
         /// <inheritdoc/>
-        public ICliApp Build()
+        public App Build<App>() where App : class, ICliApp
         {
-            return null;
+            var hostingServices = BuildCommonServices(out var hostingStartupErrors);
+
+            hostingServices.AddTransient<App>(); 
+
+            var provider = hostingServices.BuildServiceProvider();
+
+            return provider.GetService<App>();
+        }
+
+        private IServiceCollection BuildCommonServices(out AggregateException hostingStartupErrors)
+        {
+            hostingStartupErrors = null;
+
+            var services = new ServiceCollection();
+
+            _configureServices?.Invoke(services);
+
+            return services;
         }
     }
 }

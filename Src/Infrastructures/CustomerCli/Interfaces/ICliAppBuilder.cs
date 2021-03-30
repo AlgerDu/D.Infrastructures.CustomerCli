@@ -21,6 +21,6 @@ namespace D.Infrastructures.CustomerCli
         /// 构建
         /// </summary>
         /// <returns></returns>
-        ICliApp Build();
+        App Build<App>() where App : class, ICliApp;
     }
 }
