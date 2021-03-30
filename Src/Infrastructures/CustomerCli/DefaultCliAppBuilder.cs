@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,6 +17,12 @@ namespace D.Infrastructures.CustomerCli
         public DefaultCliAppBuilder(string[] args)
         {
 
+        }
+
+        /// <inheritdoc/>
+        public ICliAppBuilder ConfigureServices(Action<IServiceCollection> configureDelegate)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
