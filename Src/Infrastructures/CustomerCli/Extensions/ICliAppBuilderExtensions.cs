@@ -19,6 +19,11 @@ namespace D.Infrastructures.CustomerCli
         {
             builder.ConfigureServices(services =>
             {
+                services.AddLogging();
+            });
+
+            builder.ConfigureServices(services =>
+            {
                 services.AddSingleton<ICmdContextConfigProvider, ArgsProvider>();
                 services.AddSingleton<ICmdContextConfigProvider, OsProvider>();
 
