@@ -36,7 +36,7 @@ namespace D.Infrastructures.CustomerCli
         {
             var hostingServices = BuildCommonServices(out var hostingStartupErrors);
 
-            hostingServices.AddTransient<App>(); 
+            hostingServices.AddTransient<App>();
 
             var provider = hostingServices.BuildServiceProvider();
 
@@ -48,6 +48,11 @@ namespace D.Infrastructures.CustomerCli
             hostingStartupErrors = null;
 
             var services = new ServiceCollection();
+
+            services.Configure<ArgsOptions>(options =>
+            {
+                options.Args = _args;
+            });
 
             _configureServices?.Invoke(services);
 

@@ -32,7 +32,7 @@ namespace D.Infrastructures.CustomerCli
             {
                 if (typeof(ICmd).IsAssignableFrom(type))
                 {
-                    var attr = (CmdAttribute)type.GetCustomAttributes(typeof(CmdAttribute), true).SingleOrDefault();
+                    var attr = type.GetCmdAttr();
 
                     if (attr != null)
                     {
