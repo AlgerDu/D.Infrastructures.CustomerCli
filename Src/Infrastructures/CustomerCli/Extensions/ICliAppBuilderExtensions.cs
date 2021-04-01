@@ -26,6 +26,8 @@ namespace D.Infrastructures.CustomerCli
             {
                 services.AddSingleton<ICmdContextConfigProvider, ArgsProvider>();
                 services.AddSingleton<ICmdContextConfigProvider, OsProvider>();
+                services.AddSingleton<IConsoleOutput, ConsoleOutput>();
+                services.AddSingleton<ICmdContext, CmdContext>();
             });
 
             builder.ConfigureServices(services =>
@@ -37,7 +39,7 @@ namespace D.Infrastructures.CustomerCli
                     services.AddTransient(cmdType);
                 }
 
-                services.AddSingleton(provider);
+                services.AddSingleton<ICmdProvider>(provider);
             });
 
             return builder;

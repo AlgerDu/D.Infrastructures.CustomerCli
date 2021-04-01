@@ -12,7 +12,7 @@ namespace D.Infrastructures.CustomerCli
     /// </summary>
     public class ArgsProvider : ICmdContextConfigProvider
     {
-        IConfiguration _configs;
+        IConfiguration _config;
 
         /// <summary>
         /// 默认构造函数
@@ -27,7 +27,7 @@ namespace D.Infrastructures.CustomerCli
             var cmdCode = AnaylseCmdCode(options.Value?.Args);
             var map = AnaylseCmdParamMap(cmdCode, supportCmds);
 
-            _configs = new ConfigurationBuilder()
+            _config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string> { { "cmd", cmdCode } })
                 .AddCommandLine(options.Value.Args, map)
                 .Build();
@@ -36,7 +36,7 @@ namespace D.Infrastructures.CustomerCli
         /// <inheritdoc/>
         public IConfiguration Get()
         {
-            return _configs;
+            return _config;
         }
 
         private string AnaylseCmdCode(string[] args)
