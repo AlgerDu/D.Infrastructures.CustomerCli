@@ -26,8 +26,18 @@ namespace D.Infrastructures.CustomerCli
             {
                 services.AddSingleton<ICmdContextConfigProvider, ArgsProvider>();
                 services.AddSingleton<ICmdContextConfigProvider, OsProvider>();
+            });
 
-                services.AddSingleton<ICmdProvider, CmdProvider>();
+            builder.ConfigureServices(services =>
+            {
+                var provider = new CmdProvider();
+
+                foreach (var cmdType in provider.Supports.Values)
+                {
+                    services.AddTransient(cmdType);
+                }
+
+                services.AddSingleton(provider);
             });
 
             return builder;
