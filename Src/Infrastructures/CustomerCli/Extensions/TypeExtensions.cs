@@ -19,5 +19,25 @@ namespace D.Infrastructures.CustomerCli
         {
             return (CmdAttribute)type.GetCustomAttributes(typeof(CmdAttribute), true).SingleOrDefault();
         }
+
+        /// <summary>
+        /// 获取某个下面的自定义 attr
+        /// </summary>
+        /// <typeparam name="AttrType"></typeparam>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static AttrType GetAttr<AttrType>(this Type type) where AttrType : Attribute
+        {
+            var o = type.GetCustomAttributes(typeof(AttrType), true).SingleOrDefault();
+
+            if (o == null)
+            {
+                return null;
+            }
+            else
+            {
+                return o as AttrType;
+            }
+        }
     }
 }
