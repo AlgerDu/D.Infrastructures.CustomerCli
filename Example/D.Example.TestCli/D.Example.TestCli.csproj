@@ -6,13 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\Infrastructures\CustomerCli\CustomerCli.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="cli.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\Infrastructures\CustomerCli\CustomerCli.csproj" />
   </ItemGroup>
 
 </Project>
