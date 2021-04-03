@@ -2,7 +2,7 @@
   "profiles": {
     "D.Example.TestCli": {
       "commandName": "Project",
-      "commandLineArgs": "help -c show-word"
+      "commandLineArgs": "help"
     }
   }
 }

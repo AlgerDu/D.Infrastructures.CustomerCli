@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace D.Infrastructures.CustomerCli
@@ -35,7 +36,62 @@ namespace D.Infrastructures.CustomerCli
         ///<inheritdoc/>
         public override void Execute()
         {
+            var options = _context.GetCmdOptions<HelpCmdOptions>();
 
+            if (string.IsNullOrEmpty(options?.CmdCode))
+            {
+                ShowToolHelp();
+            }
+            else
+            {
+                ShowCmdHelp(options.CmdCode);
+            }
+        }
+
+        private void ShowToolHelp()
+        {
+            _output.Write($"支持的命令：");
+
+            foreach (var cmd in _cmds.Supports.Keys)
+            {
+                var info = _cmds.GetDescription(cmd);
+
+                _output.Write($"{info.Code} {info.Description}");
+            }
+        }
+
+        private void ShowCmdHelp(string cmdCode)
+        {
+            var info = _cmds.GetDescription(cmdCode);
+
+            if (info == null)
+            {
+                _output.Write($"cmd [{cmdCode}] not support");
+
+                ShowToolHelp();
+                return;
+            }
+
+            _output.Write($"[{cmdCode}] {info.Description}");
+            _output.Write($"可选参数：");
+
+            if (info.Options.Count == 0)
+            {
+                _output.Write("无");
+                return;
+            }
+
+            foreach (var p in info.Options)
+            {
+                var tmp = string.Empty;
+
+                foreach (var m in p.Maps)
+                {
+                    tmp += $"{m}; ";
+                }
+
+                _output.Write($"{tmp} {p.Description}");
+            }
         }
     }
 }
