@@ -109,5 +109,21 @@ namespace D.Infrastructures.CustomerCli
         {
             return context.GetSection("cmd").Get<string>();
         }
+
+        /// <summary>
+        /// 从上下文中获取命令的可选参数
+        /// </summary>
+        /// <typeparam name="CmdOptionType"></typeparam>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static CmdOptionType GetCmdOptions<CmdOptionType>(this ICmdContext context)
+        {
+            if (!context.GetSection("options").Exists())
+            {
+                return default(CmdOptionType);
+            }
+
+            return context.GetSection("options").Get<CmdOptionType>();
+        }
     }
 }
