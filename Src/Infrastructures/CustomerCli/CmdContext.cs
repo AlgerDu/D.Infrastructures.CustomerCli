@@ -6,6 +6,9 @@ using System.Text;
 
 namespace D.Infrastructures.CustomerCli
 {
+    /// <summary>
+    /// 一个简单的上下文；收集所有的 config
+    /// </summary>
     public class CmdContext : ICmdContext
     {
         readonly IConfiguration _config;
@@ -14,7 +17,14 @@ namespace D.Infrastructures.CustomerCli
             IEnumerable<ICmdContextConfigProvider> providers
             )
         {
+            var builder = new ConfigurationBuilder();
 
+            foreach (var provider in providers)
+            {
+                builder.AddConfiguration(provider.Get());
+            }
+
+            _config = builder.Build();
         }
 
         ///<inheritdoc/>
