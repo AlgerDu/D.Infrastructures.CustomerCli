@@ -6,4 +6,8 @@
     <RootNamespace>D.Utils</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <DocumentationFile>.\bin\D.Utils.InnerCmd.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>
