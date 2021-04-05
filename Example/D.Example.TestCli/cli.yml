@@ -7,7 +7,14 @@ cmds:
         os: win
         type: service
       operations:
-        download:
+        install:
           inner-cmds:
-            - ""
+            - "nssm install"
+    docker:
+      condition:
+        type: docker
+      operations:
+        install:
+          inner-cmds:
+            - "nssm install"
       
