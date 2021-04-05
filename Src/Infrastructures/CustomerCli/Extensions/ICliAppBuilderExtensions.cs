@@ -24,8 +24,6 @@ namespace D.Infrastructures.CustomerCli
 
             builder.ConfigureServices(services =>
             {
-                services.AddSingleton<ICmdContextConfigProvider, ArgsProvider>();
-                services.AddSingleton<ICmdContextConfigProvider, OsProvider>();
                 services.AddSingleton<IConsoleOutput, ConsoleOutput>();
                 services.AddSingleton<ICmdContext, CmdContext>();
             });
@@ -42,6 +40,8 @@ namespace D.Infrastructures.CustomerCli
                 services.AddSingleton<ICmdProvider>(provider);
             });
 
+            builder.CollectAllProvider();
+
             return builder;
         }
 
@@ -53,6 +53,24 @@ namespace D.Infrastructures.CustomerCli
         public static ICliApp BuildDefaultApp(this ICliAppBuilder builder)
         {
             return builder.Build<DefaultCliApp>();
+        }
+
+        private static ICliAppBuilder CollectAllProvider(this ICliAppBuilder builder)
+        {
+            builder.ConfigureServices(services =>
+            {
+                var assembly = typeof(ICliAppBuilderExtensions).Assembly;
+
+                foreach (var t in assembly.GetTypes())
+                {
+                    if (t.IsClass && typeof(ICmdContextConfigProvider).IsAssignableFrom(t))
+                    {
+                        services.AddSingleton(typeof(ICmdContextConfigProvider), t);
+                    }
+                }
+            });
+
+            return builder;
         }
     }
 }
