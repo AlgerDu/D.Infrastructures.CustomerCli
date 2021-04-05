@@ -50,14 +50,20 @@ namespace D.Infrastructures.CustomerCli
 
         private void ShowToolHelp()
         {
-            _output.Write($"支持的命令：");
+            _output.WriteLine($"支持的命令：");
+
+            _output
+                .NewLine()
+                .BeginScope();
 
             foreach (var cmd in _cmds.Supports.Keys)
             {
                 var info = _cmds.GetDescription(cmd);
 
-                _output.Write($"{info.Code} {info.Description}");
+                _output.WriteLine("{0,-15}{1}", info.Code, info.Description);
             }
+
+            _output.EndScope();
         }
 
         private void ShowCmdHelp(string cmdCode)
@@ -66,18 +72,22 @@ namespace D.Infrastructures.CustomerCli
 
             if (info == null)
             {
-                _output.Write($"cmd [{cmdCode}] not support");
+                _output.WriteLine($"cmd [{cmdCode}] not support");
 
                 ShowToolHelp();
                 return;
             }
 
-            _output.Write($"[{cmdCode}] {info.Description}");
-            _output.Write($"可选参数：");
+            _output.WriteLine($"[{cmdCode}] {info.Description}");
+            _output.WriteLine($"可选参数：");
+
+            _output
+                .NewLine()
+                .BeginScope();
 
             if (info.Options.Count == 0)
             {
-                _output.Write("无");
+                _output.WriteLine("无");
                 return;
             }
 
@@ -90,7 +100,7 @@ namespace D.Infrastructures.CustomerCli
                     tmp += $"{m}; ";
                 }
 
-                _output.Write($"{tmp} {p.Description}");
+                _output.WriteLine("{0,-20}{1}", tmp, p.Description);
             }
         }
     }
