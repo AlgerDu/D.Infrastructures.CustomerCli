@@ -23,4 +23,20 @@ namespace D.Infrastructures.CustomerCli
                 .Build();
         }
     }
+
+    /// <summary>
+    /// 有关配置的一些读取
+    /// </summary>
+    public static class ICmdContextExtensions_Env
+    {
+        /// <summary>
+        /// 获取命令码
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static string GetWorkDir(this ICmdContext context)
+        {
+            return context.GetSection("workDir").Get<string>();
+        }
+    }
 }
