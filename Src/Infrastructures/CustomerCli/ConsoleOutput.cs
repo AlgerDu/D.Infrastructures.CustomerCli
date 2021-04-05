@@ -14,7 +14,7 @@ namespace D.Infrastructures.CustomerCli
         {
             lock (this)
             {
-                Console.WriteLine(format, args);
+                Console.Write(format, args);
             }
         }
     }
