@@ -79,11 +79,10 @@ namespace D.Infrastructures.CustomerCli
             }
 
             _output.WriteLine($"[{cmdCode}] {info.Description}");
-            _output.WriteLine($"可选参数：");
 
-            _output
-                .NewLine()
-                .BeginScope();
+            _output.NewLine().WriteLine($"可选参数：");
+
+            _output.BeginScope();
 
             if (info.Options.Count == 0)
             {
