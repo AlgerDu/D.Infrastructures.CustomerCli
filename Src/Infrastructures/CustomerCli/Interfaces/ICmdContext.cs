@@ -14,6 +14,6 @@ namespace D.Infrastructures.CustomerCli
         /// 通过其它的形式来附加配置信息
         /// </summary>
         /// <param name="ext"></param>
-        void AddCOnfig(IConfiguration ext);
+        void AddConfig(IConfiguration ext);
     }
 }

@@ -28,7 +28,7 @@ namespace D.Infrastructures.CustomerCli
         }
 
         /// <inheritdoc/>
-        public void AddCOnfig(IConfiguration ext)
+        public void AddConfig(IConfiguration ext)
         {
             _config = new ConfigurationBuilder()
                 .AddConfiguration(_config)
