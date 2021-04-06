@@ -116,11 +116,11 @@ namespace D.Infrastructures.CustomerCli
         /// <typeparam name="CmdOptionType"></typeparam>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static CmdOptionType GetCmdOptions<CmdOptionType>(this ICmdContext context)
+        public static CmdOptionType GetCmdOptions<CmdOptionType>(this ICmdContext context) where CmdOptionType : new()
         {
             if (!context.GetSection("options").Exists())
             {
-                return default(CmdOptionType);
+                return new CmdOptionType();
             }
 
             return context.GetSection("options").Get<CmdOptionType>();
