@@ -10,5 +10,10 @@ namespace D.Infrastructures.CustomerCli
     /// </summary>
     public interface ICmdContext : IConfiguration
     {
+        /// <summary>
+        /// 通过其它的形式来附加配置信息
+        /// </summary>
+        /// <param name="ext"></param>
+        void AddCOnfig(IConfiguration ext);
     }
 }
