@@ -34,18 +34,22 @@ namespace D.Example.TestCli
 
             foreach (var t in tmp.Values)
             {
+                var ok = true;
+
                 foreach (var o in t.Condition)
                 {
                     var s = context.GetSection(o.Key);
 
-                    if (s.Exists() && s.Get<string>() == o.Value)
+                    if (!s.Exists() || s.Get<string>() != o.Value)
                     {
-
+                        ok = false;
+                        break;
                     }
-                    else
-                    {
+                }
 
-                    }
+                if (ok)
+                {
+                    return t;
                 }
             }
 

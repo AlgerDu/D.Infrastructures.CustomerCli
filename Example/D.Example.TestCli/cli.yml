@@ -1,6 +1,6 @@
 tools:
 
-type
+type: service
 
 cmds:
   show-word:
