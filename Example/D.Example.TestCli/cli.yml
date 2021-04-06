@@ -1,20 +1,20 @@
 tools:
 
+type
+
 cmds:
   show-word:
-    win-service:
-      condition:
-        os: win
-        type: service
-      operations:
-        install:
-          inner-cmds:
-            - "nssm install"
-    docker:
-      condition:
-        type: docker
-      operations:
-        install:
-          inner-cmds:
-            - "nssm install"
+    install:
+      win-service:
+        condition:
+          os: win
+          type: service
+        inner_cmds:
+          - "ipconfig"
+      linux:
+        condition:
+          os: linux
+          type: service
+        inner_cmds:
+          - "pwd"
       
