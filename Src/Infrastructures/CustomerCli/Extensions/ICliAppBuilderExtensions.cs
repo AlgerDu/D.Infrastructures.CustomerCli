@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using D.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace D.Infrastructures.CustomerCli
@@ -24,23 +25,8 @@ namespace D.Infrastructures.CustomerCli
 
             builder.ConfigureServices(services =>
             {
-                services.AddSingleton<IConsoleOutput, ConsoleOutput>();
-                services.AddSingleton<ICmdContext, CmdContext>();
+                services.AddCustomerCliCore();
             });
-
-            builder.ConfigureServices(services =>
-            {
-                var provider = new CmdProvider();
-
-                foreach (var cmdType in provider.Supports.Values)
-                {
-                    services.AddTransient(cmdType);
-                }
-
-                services.AddSingleton<ICmdProvider>(provider);
-            });
-
-            builder.CollectAllProvider();
 
             return builder;
         }
@@ -55,22 +41,66 @@ namespace D.Infrastructures.CustomerCli
             return builder.Build<DefaultCliApp>();
         }
 
-        private static ICliAppBuilder CollectAllProvider(this ICliAppBuilder builder)
+        private static IServiceCollection AddCustomerCliCore(this IServiceCollection services)
         {
-            builder.ConfigureServices(services =>
-            {
-                var assembly = typeof(ICliAppBuilderExtensions).Assembly;
+            services.AddSingleton<IConsoleOutput, ConsoleOutput>();
+            services.AddSingleton<ICmdContext, CmdContext>();
 
-                foreach (var t in assembly.GetTypes())
+            services.AddCmdProvider();
+            services.CollectAllProvider();
+
+            services.AddInnerCmd();
+
+            return services;
+        }
+
+        private static IServiceCollection AddCmdProvider(this IServiceCollection services)
+        {
+            var provider = new CmdProvider();
+
+            foreach (var cmdType in provider.Supports.Values)
+            {
+                services.AddTransient(cmdType);
+            }
+
+            services.AddSingleton<ICmdProvider>(provider);
+
+            return services;
+        }
+
+        private static IServiceCollection CollectAllProvider(this IServiceCollection services)
+        {
+            var assembly = typeof(ICliAppBuilderExtensions).Assembly;
+
+            foreach (var t in assembly.GetTypes())
+            {
+                if (t.IsClass && typeof(ICmdContextConfigProvider).IsAssignableFrom(t))
                 {
-                    if (t.IsClass && typeof(ICmdContextConfigProvider).IsAssignableFrom(t))
-                    {
-                        services.AddSingleton(typeof(ICmdContextConfigProvider), t);
-                    }
+                    services.AddSingleton(typeof(ICmdContextConfigProvider), t);
+                }
+            }
+
+            return services;
+        }
+
+        private static IServiceCollection AddInnerCmd(this IServiceCollection services)
+        {
+            services.AddSingleton<IInnerCmdExecutor>(provider =>
+            {
+                var context = provider.GetService<ICmdContext>();
+
+                var os = context.OS();
+
+                switch (os)
+                {
+                    case "win": return new WinInnerCmdExecutor();
+                    case "linux": return new LinuxInnerCmdExecutor();
+                    default:
+                        return null;
                 }
             });
 
-            return builder;
+            return services;
         }
     }
 }
