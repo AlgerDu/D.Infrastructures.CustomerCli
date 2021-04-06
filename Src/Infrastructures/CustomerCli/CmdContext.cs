@@ -11,7 +11,7 @@ namespace D.Infrastructures.CustomerCli
     /// </summary>
     public class CmdContext : ICmdContext
     {
-        readonly IConfiguration _config;
+        IConfiguration _config;
 
         public CmdContext(
             IEnumerable<ICmdContextConfigProvider> providers
@@ -27,6 +27,16 @@ namespace D.Infrastructures.CustomerCli
             _config = builder.Build();
         }
 
+        /// <inheritdoc/>
+        public void AddCOnfig(IConfiguration ext)
+        {
+            _config = new ConfigurationBuilder()
+                .AddConfiguration(_config)
+                .AddConfiguration(ext)
+                .Build();
+        }
+
+        #region IConfiguration
         ///<inheritdoc/>
         public string this[string key] { get => _config[key]; set => _config[key] = value; }
 
@@ -47,5 +57,6 @@ namespace D.Infrastructures.CustomerCli
         {
             return _config.GetSection(key);
         }
+        #endregion
     }
 }
