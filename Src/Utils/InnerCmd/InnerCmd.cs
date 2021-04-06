@@ -10,5 +10,12 @@ namespace D.Utils
 
         public string WorkDir { get; set; }
         public string Output { get; set; }
+
+        public InnerCmd() { }
+
+        public InnerCmd(string args)
+        {
+            Arguments = args;
+        }
     }
 }
