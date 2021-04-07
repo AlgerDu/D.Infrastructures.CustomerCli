@@ -4,6 +4,18 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>D.Infrastructures.CustomerCli</AssemblyName>
     <RootNamespace>D.Infrastructures.CustomerCli</RootNamespace>
+    
+    <Authors>AlgerDu</Authors>
+    <Product>D.Infrastructures</Product>
+    <PackageTags>Infrastructures</PackageTags>
+    
+    <Description>自定义命令行工具基础支持</Description>
+    
+    <Version>0.1.040701</Version>
+    <AssemblyVersion>0.1.0407.01</AssemblyVersion>
+    <FileVersion>0.1.0407.01</FileVersion>
+    
+    <PackageReleaseNotes>初始测试</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
