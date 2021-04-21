@@ -13,5 +13,21 @@ namespace Test.Utils
 
             var success = new WinInnerCmdExecutor().Execute(cmd);
         }
+
+        [TestMethod]
+        public void Test_cmd_notExist()
+        {
+            var cmd = new InnerCmd() { Arguments = "xx" };
+
+            var success = new WinInnerCmdExecutor().Execute(cmd);
+        }
+
+        [TestMethod]
+        public void Test_docker()
+        {
+            var cmd = new InnerCmd() { Arguments = "docker ps -a" };
+
+            var success = new WinInnerCmdExecutor().Execute(cmd);
+        }
     }
 }
