@@ -27,9 +27,28 @@ namespace D.Infrastructures.CustomerCli
             var cmdCode = AnaylseCmdCode(options.Value?.Args);
             var map = AnaylseCmdParamMap(cmdCode, supportCmds);
 
+            var arg = new List<string>();
+
+            if (options.Value?.Args.Length > 1)
+            {
+                for (var i = 1; i < options.Value?.Args.Length;)
+                {
+                    if (i+1<options.Value.Args.Length && !options.Value.Args[i + 1].StartsWith("-"))
+                    {
+                        arg.Add(options.Value.Args[i++]);
+                        arg.Add(options.Value.Args[i++]);
+                    }
+                    else
+                    {
+                        arg.Add(options.Value.Args[i++]);
+                        arg.Add("true");
+                    }
+                }
+            }
+
             _config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string> { { "cmd", cmdCode } })
-                .AddCommandLine(options.Value.Args, map)
+                .AddCommandLine(arg.ToArray(), map)
                 .Build();
         }
 

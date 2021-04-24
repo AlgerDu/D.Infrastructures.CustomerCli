@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Xml;
 
 namespace D.VersionTool
@@ -24,19 +25,16 @@ namespace D.VersionTool
 
         public override void Execute()
         {
+            var options = _context.GetCmdOptions<InitCmdOptions>();
+
+            var config = _context.GetConfig(options.File);
+
             var workDir = _context.GetWorkDir();
 
             var data = new DvtModel();
             List<ProjectModel> projects = new List<ProjectModel>();
 
-            AnaylseDirectory(workDir, projects);
-
-            foreach (var project in projects)
-            {
-                project.Path = Path.GetRelativePath(workDir, project.Path)
-                    .Replace("\\", "/")
-                    .Insert(0, "./");
-            }
+            CollectProjects(workDir, projects);
 
             foreach (var project in projects)
             {
@@ -52,9 +50,13 @@ namespace D.VersionTool
                     }
                 }
             }
+
+            config.Projects = projects;
+
+            _context.SaveConfig(options.File, config);
         }
 
-        private void AnaylseDirectory(string path, List<ProjectModel> projects)
+        private void CollectProjects(string path, List<ProjectModel> projects)
         {
             var files = Directory.GetFiles(path, "*.csproj");
 
@@ -63,7 +65,9 @@ namespace D.VersionTool
                 var project = new ProjectModel
                 {
                     Name = Path.GetFileNameWithoutExtension(file),
-                    Path = file
+                    Path = Path.GetRelativePath(_context.GetWorkDir(), file)
+                             .Replace("\\", "/")
+                             .Insert(0, "./")
                 };
 
                 _output.WriteLine("collect {0,-30}{1}", project.Name, project.Path);
@@ -82,7 +86,7 @@ namespace D.VersionTool
                     continue;
                 }
 
-                AnaylseDirectory(child, projects);
+                CollectProjects(child, projects);
             }
         }
 
@@ -112,15 +116,7 @@ namespace D.VersionTool
         }
     }
 
-    public class InitCmdOptions
+    public class InitCmdOptions : BaseCmdOptions
     {
-        [SwitchMapKey("f", "file")]
-        [Description("输出的配置文件路径")]
-        public string File { get; set; }
-
-        public InitCmdOptions()
-        {
-            File = "./dvt.json";
-        }
     }
 }
