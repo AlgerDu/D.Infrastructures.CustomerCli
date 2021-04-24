@@ -13,6 +13,8 @@ namespace D.VersionTool
         public Dictionary<string, List<string>> Groups { get; set; } = new Dictionary<string, List<string>>();
 
         public List<ProjectModel> Projects { get; set; } = new List<ProjectModel>();
+
+        public List<string> Ignores { get; set; } = new List<string>();
     }
 
     public class VersionConfig

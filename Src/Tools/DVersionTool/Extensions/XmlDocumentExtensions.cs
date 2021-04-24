@@ -22,7 +22,7 @@ namespace D.VersionTool
 
         public static ProjectVersionModel GetCurrVersion(this XmlDocument xml)
         {
-            var node = xml.SelectSingleNode("Project/ItemGroup/Version");
+            var node = xml.SelectSingleNode("Project/PropertyGroup/Version");
             var version = new ProjectVersionModel();
 
             if (node == null)

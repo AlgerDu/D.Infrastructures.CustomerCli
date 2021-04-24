@@ -60,23 +60,37 @@ namespace D.VersionTool
             var config = _context.GetConfig(options.File);
             var versionConfig = config.Config["Nuget"];
 
-            var project = UpdateProjectVersion(options.Name, versionConfig, options.Version);
             List<string> toUpdateProject = new List<string>();
 
-            if (project != null)
-            {
-                toUpdateProject.AddRange(project.Supports);
-            }
+            toUpdateProject.Add(options.Name);
+            var count = 0;
+
+            _dvtConfig.Stashs.Remove(options.Name);
 
             while (toUpdateProject.Count > 0)
             {
                 var name = toUpdateProject[0];
 
-                project = UpdateProjectVersion(name, versionConfig, null);
+                ProjectModel project = null;
+
+                if (count == 0)
+                {
+                    project = UpdateProjectVersion(options.Name, versionConfig, options.Version);
+                }
+                else
+                {
+                    project = UpdateProjectVersion(name, versionConfig, null);
+                }
 
                 if (project != null)
                 {
-                    toUpdateProject.AddRange(project.Supports);
+                    foreach (var n in project.Supports)
+                    {
+                        if (!_dvtConfig.Ignores.Contains(n) && !_dvtConfig.Groups.SelectMany(vv => vv.Value).Contains(n))
+                        {
+                            toUpdateProject.Add(n);
+                        }
+                    }
                 }
 
                 if (!_dvtConfig.Stashs.Contains(name))
@@ -85,7 +99,10 @@ namespace D.VersionTool
                 }
 
                 toUpdateProject.RemoveAt(0);
+                count++;
             }
+
+            _output.WriteLine($"total {count} projects");
 
             _context.SaveConfig(options.File, _dvtConfig);
         }
@@ -115,7 +132,7 @@ namespace D.VersionTool
 
                 var tmp = config.Template.Split('.');
 
-                var bulidIndex = tmp.Length;
+                var bulidIndex = tmp.Length -1;
 
                 var buildNo = oldVersion.Nums[bulidIndex];
 
