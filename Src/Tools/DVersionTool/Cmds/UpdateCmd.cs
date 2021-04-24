@@ -60,23 +60,34 @@ namespace D.VersionTool
             var config = _context.GetConfig(options.File);
             var versionConfig = config.Config["Nuget"];
 
+            var project = UpdateProjectVersion(options.Name, versionConfig, options.Version);
             List<string> toUpdateProject = new List<string>();
 
-            toUpdateProject.Add(options.Name);
+            if (project != null)
+            {
+                toUpdateProject.AddRange(project.Supports);
+            }
 
             while (toUpdateProject.Count > 0)
             {
                 var name = toUpdateProject[0];
 
-                var project = UpdateProjectVersion(name, versionConfig, options.Version);
+                project = UpdateProjectVersion(name, versionConfig, null);
 
                 if (project != null)
                 {
                     toUpdateProject.AddRange(project.Supports);
                 }
 
+                if (!_dvtConfig.Stashs.Contains(name))
+                {
+                    _dvtConfig.Stashs.Add(name);
+                }
+
                 toUpdateProject.RemoveAt(0);
             }
+
+            _context.SaveConfig(options.File, _dvtConfig);
         }
 
         public ProjectModel UpdateProjectVersion(string projectName, VersionConfig config, string newVersion)

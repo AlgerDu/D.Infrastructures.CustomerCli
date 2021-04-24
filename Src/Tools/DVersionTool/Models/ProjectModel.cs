@@ -25,9 +25,9 @@ namespace D.VersionTool
                 var arr = value.Split('.');
 
                 Nums[0] = arr[0];
-                Nums[0] = arr[1];
-                Nums[0] = arr.Length > 3 ? arr[2] : "0";
-                Nums[0] = arr.Length > 4 ? arr[3] : "0";
+                Nums[1] = arr[1];
+                Nums[2] = arr.Length > 3 ? arr[2] : "0";
+                Nums[3] = arr.Length > 4 ? arr[3] : "0";
 
                 _version = value;
             }

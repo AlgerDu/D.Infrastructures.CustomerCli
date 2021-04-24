@@ -40,9 +40,9 @@ namespace D.VersionTool
 
         public static void SetVersion(this XmlDocument xml, ProjectVersionModel version)
         {
-            xml.SetNodeInnerText("Project/ItemGroup", "Version", version.Version);
-            xml.SetNodeInnerText("Project/ItemGroup", "AssemblyVersion", version.AssemblyVersion);
-            xml.SetNodeInnerText("Project/ItemGroup", "FileVersion", version.FileVersion);
+            xml.SetNodeInnerText("Project/PropertyGroup", "Version", version.Version);
+            xml.SetNodeInnerText("Project/PropertyGroup", "AssemblyVersion", version.AssemblyVersion);
+            xml.SetNodeInnerText("Project/PropertyGroup", "FileVersion", version.FileVersion);
         }
 
         private static void SetNodeInnerText(this XmlDocument xml, string parent, string name, string value)
@@ -51,7 +51,7 @@ namespace D.VersionTool
 
             if (node == null)
             {
-                node = xml.CreateElement("name");
+                node = xml.CreateElement(name);
 
                 var parentNode = xml.SelectSingleNode(parent);
                 parentNode.AppendChild(node);
