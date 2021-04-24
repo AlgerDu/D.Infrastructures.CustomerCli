@@ -14,7 +14,7 @@ namespace D.Infrastructures.CustomerCli
         /// <inheritdoc/>
         public IConfiguration Get()
         {
-            var t = Assembly.GetExecutingAssembly().GetName();
+            var t = Assembly.GetEntryAssembly().GetName();
 
             return new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
