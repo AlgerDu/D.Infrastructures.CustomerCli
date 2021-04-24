@@ -9,7 +9,7 @@ using System.Text;
 namespace D.VersionTool
 {
     [Cmd("update", OptionType = typeof(UpdateCmdOptions))]
-    [Description("初始化配置文件")]
+    [Description("更新项目的版本号")]
     public class UpdateCmd : BaseCmd
     {
         DvtModel _dvtConfig;

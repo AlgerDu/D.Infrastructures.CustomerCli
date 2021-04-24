@@ -3,13 +3,17 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    
+
     <AssemblyName>dvt</AssemblyName>
     <RootNamespace>D.VersionTool</RootNamespace>
-    
+
+    <Version>1.0.0.042401</Version>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+
   </PropertyGroup>
 
-  <ItemGroup>    
+  <ItemGroup>
     <ProjectReference Include="..\..\Infrastructures\CustomerCli\CustomerCli.csproj" />
   </ItemGroup>
 
