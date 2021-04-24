@@ -38,6 +38,41 @@ namespace D.VersionTool
             return version;
         }
 
+        public static string GetPackageName(this XmlDocument xml, string projectName)
+        {
+            var version = "";
+            var pakName = "";
+
+            var node = xml.SelectSingleNode("Project/PropertyGroup/Version");
+            if (node == null)
+            {
+                version = "1.0.0.0";
+            }
+            else
+            {
+                version = node.InnerText;
+            }
+
+            node = xml.SelectSingleNode("Project/PropertyGroup/AssemblyName");
+            if (node == null)
+            {
+                pakName = projectName;
+            }
+            else
+            {
+                pakName = node.InnerText;
+            }
+
+            var tmp = version.Split('.');
+
+            for (var i = 0; i < tmp.Length; i++)
+            {
+                tmp[i] = Convert.ToInt32(tmp[i]).ToString();
+            }
+
+            return $"{pakName}.{string.Join('.', tmp)}.pak";
+        }
+
         public static void SetVersion(this XmlDocument xml, ProjectVersionModel version)
         {
             xml.SetNodeInnerText("Project/PropertyGroup", "Version", version.Version);

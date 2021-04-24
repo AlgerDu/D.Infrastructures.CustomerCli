@@ -49,7 +49,7 @@ namespace D.Infrastructures.CustomerCli
 
         private string PreHandle(string format)
         {
-            return _space + format;
+            return _space + format.Replace("{", "").Replace("}", "");
         }
     }
 }
