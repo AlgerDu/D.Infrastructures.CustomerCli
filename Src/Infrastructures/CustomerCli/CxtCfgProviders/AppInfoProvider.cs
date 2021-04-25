@@ -14,14 +14,16 @@ namespace D.Infrastructures.CustomerCli
         /// <inheritdoc/>
         public IConfiguration Get()
         {
-            var t = Assembly.GetEntryAssembly().GetName();
+            var entry = Assembly.GetEntryAssembly();
+
+            var attr = entry.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
 
             return new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    { "app:name", t.Name },
-                    { "app:version", t.Version.ToString() },
-                    { "app:location", Assembly.GetExecutingAssembly().Location }
+                    { "app:name", entry.GetName().Name },
+                    { "app:version", attr == null? entry.GetName().Version.ToString() : attr.InformationalVersion },
+                    { "app:location", entry.Location }
                 })
                 .Build();
         }

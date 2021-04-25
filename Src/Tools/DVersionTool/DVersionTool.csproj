@@ -7,7 +7,7 @@
     <AssemblyName>dvt</AssemblyName>
     <RootNamespace>D.VersionTool</RootNamespace>
 
-    <Version>1.0.0.042401</Version>
+    <Version>2.0.1.042401-ap</Version>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
 
